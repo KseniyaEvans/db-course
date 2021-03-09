@@ -13,7 +13,6 @@
 _____
 
 <p align="center">
-  <b> Main menu </b>
   <img src="screenshots/main_menu.png" width="900">
 </p>
 
