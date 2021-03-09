@@ -3,7 +3,6 @@ from scrapy.utils.project import get_project_settings
 from lxml import etree
 import os
 import webbrowser
-from pprint import pprint
 from consolemenu import SelectionMenu
 
 class bcolors:
@@ -15,6 +14,7 @@ class bcolors:
     BOLD    = "\033[;1m"
     REVERSE = "\033[;7m"
 
+
 def cleanup():
     try:
         os.remove("../results/ukraine-is.xml")
@@ -22,6 +22,7 @@ def cleanup():
         os.remove("../results/instrument_in_ua.xhtml")
     except OSError:
         pass
+
 
 def show_start_menu():
     menu = SelectionMenu([
@@ -37,8 +38,10 @@ def show_start_menu():
         index = menu.selected_option
         (crawl, print_all_links_from_ukraine_is, create_xhtml_table)[index]()
 
+
 def press_enter(msg=''):
     return input(bcolors.CYAN + f'{msg}\nPress ENTER to continue...' + bcolors.RESET)
+
 
 def crawl():
     process = CrawlerProcess(get_project_settings())
@@ -59,6 +62,7 @@ def print_all_links_from_ukraine_is():
     press_enter()
     show_start_menu()
 
+
 def create_xhtml_table():
     transform = etree.XSLT(etree.parse("transform.xsl"))
     result = transform(etree.parse("../results/instrument_in_ua.xml"))
@@ -67,6 +71,7 @@ def create_xhtml_table():
 
     press_enter('XHTML table was created, results are saved.')
     show_start_menu()
+
 
 if __name__ == '__main__':
     cleanup()

@@ -28,9 +28,7 @@ class UkraineIsSpider(scrapy.Spider):
         }
         if response.url == self.start_urls[0]:
             link_elems = response.xpath("//a/@href[starts-with(., 'https://www.ukraine-is.com/uk/') or starts-with(., '/')]")
-            links = [link.get() for link in link_elems if link.get() != "https://www.ukraine-is.com/uk/"][:19]
-            print("SELECTED LINKS: ")
-            print(links)
+            links = [link.get() for link in link_elems if link.get() != "https://www.ukraine-is.com/uk/"][:19]            
             for link in links:
                 yield scrapy.Request(link, self.parse)
 
