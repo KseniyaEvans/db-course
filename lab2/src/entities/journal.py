@@ -28,7 +28,7 @@ class Journal:
                 if message_type == 'connected':
                     self.user_connected()
                     if self.logging:
-                        print(colored('User {} is online now!'.format(message['user']), 'blue'))
+                        print(colored('User {} is online now!'.format(message['user']), 'cyan'))
                 if message_type == 'disconnected':
                     self.user_disconnected()
                     if self.logging:

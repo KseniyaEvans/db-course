@@ -2,7 +2,7 @@ import sys
 from entities.client import Client
 # import colored
 from colored import fg, bg, attr
-from ui import menu_template
+
 from ui.ui import UI
 
 client = Client()

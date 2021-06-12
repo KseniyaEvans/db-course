@@ -1,6 +1,6 @@
 from entities.client import Client
-# from PyInquirer import prompt
 from entities.constants import Role
+from entities.constants import Status
 from termcolor import colored
 
 from consolemenu import SelectionMenu
@@ -100,7 +100,15 @@ class UI:
             
             for hashcode in messages:
                 mess = self.client.get_message(hashcode)
-                new_str = colored(mess['Sender'], 'green') + '\t' + colored(mess['Status'], 'yellow') + '\t' + mess['Message']+ '\t'
+                status_col = 'yellow'
+                if (mess['Status'] == "SPAM"):
+                    status_col = 'red'
+                elif (mess['Status'] == 'RECEIVED'):
+                    status_col = 'green'
+                elif (mess['Status'] == 'CREATED'):
+                    status_col = 'cyan'
+                
+                new_str = colored(mess['Sender'], 'green') + '\t' + colored(mess['Status'], status_col) + '\t' + mess['Message']+ '\t'
                 message_list.append(new_str)
 
             selectionMenu = SelectionMenu(
@@ -122,13 +130,20 @@ class UI:
     def sent(self):
         messages = self.client.get_sent_messages(self.client.username, 10)
         if messages:
-            messages_sorted = sorted(messages, key=lambda message: message[1], reverse=True)
             print('Count: ', len(messages))
-            print('Sent messages sorted by', colored('Status', 'yellow'))
             print('Sender\t\tReceiver\t\tStatus\t\t\tMessage')
-            for hashcode in messages_sorted:
+            for hashcode in messages:
                 mess = self.client.get_message(hashcode)
-                print(colored(mess['Sender'], 'green') + '\t\t'+ mess['Receiver'] + '\t\t\t' + colored(mess['Status'], 'yellow') + '\t\t\t' + mess['Message']+ '\t')
+
+                status_col = 'yellow'
+                if (mess['Status'] == "SPAM"):
+                    status_col = 'red'
+                elif (mess['Status'] == 'RECEIVED'):
+                    status_col = 'green'
+                elif (mess['Status'] == 'CREATED'):
+                    status_col = 'cyan'
+
+                print(colored(mess['Sender'], 'green') + '\t\t'+ mess['Receiver'] + '\t\t\t' + colored(mess['Status'], status_col) + '\t\t\t' + mess['Message']+ '\t')
         else:
             print(colored('No messages', 'yellow'))
         input()

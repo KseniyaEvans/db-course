@@ -52,7 +52,7 @@ class Emulation:
         receiver = self.users[index]
         if self.client.is_exists(receiver):
             self.client.create_message(message, receiver)
-            print('Message', colored(message[:8], 'blue'), 'was sent to', colored(receiver, 'blue'))
+            print('Message', colored(message[:8], 'cyan'), 'was sent to', colored(receiver, 'cyan'))
         else:
             print(colored('Unable send message to {}: user does not exist'.format(receiver), 'red'))
 

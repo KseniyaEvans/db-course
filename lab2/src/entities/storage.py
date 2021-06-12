@@ -41,6 +41,7 @@ class Storage:
         except Exception as e:
             print(e)
 
+    # set
     def add_user(self, username):
         return self.connection.set(get_user_key(username), Role.USER, nx=True)
 
@@ -71,6 +72,7 @@ class Storage:
         self.push_message_hashcode_to_queue(hashcode)
         return self.connection.lpush(get_message_key(message.sender), hashcode)
 
+    # hash
     def update_message_status(self, hashcode, message_status):
         return self.connection.hset(hashcode, "Status", message_status)
 
@@ -80,6 +82,7 @@ class Storage:
     def get_message_receiver(self, hashcode):
         return self.connection.hget(hashcode, "Receiver")
 
+    # list
     def push_message_hashcode_to_queue(self, hashcode):
         return self.connection.rpush(queue_key_string, hashcode)
 
@@ -95,6 +98,7 @@ class Storage:
     def get_messages_from_sender(self, sender, n_elem):
         return self.connection.lrange(get_message_key(sender), 0, n_elem)
 
+    # sorted set
     def increment_spam_count(self, username):
         return self.connection.zincrby(spam_key_string, 1, username)
 
